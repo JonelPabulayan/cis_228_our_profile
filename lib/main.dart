@@ -18,10 +18,18 @@ class MyApp extends StatelessWidget {
 
 class DashboardScreen extends StatelessWidget {
   final List<Member> members = [
-    Member("Jonel", "3rd Year - A", "assets/jonel1.jpg"),
-    Member("Kelly", "3rd Year - A", "assets/kelly.jpg"),
-    Member("Yinlin", "3rd Year - A", "assets/yinlin.jpg"),
-    Member("Changli", "3rd Year - A", "assets/changli.jpg"),
+    Member(
+      name: "Jonel",
+      yearSection: "3rd Year - A",
+      profilePic: "assets/jonel1.jpg",
+      bio: "I love coding and exploring new technologies.",
+    ),
+    Member(
+      name: "Kelly",
+      yearSection: "3rd Year - A",
+      profilePic: "assets/kelly.jpg",
+      bio: "A passionate designer and front-end developer.",
+    ),
   ];
 
   DashboardScreen({super.key});
@@ -56,6 +64,14 @@ class DashboardScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Text(
+                      "Member",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8),
                     CircleAvatar(
                       radius: 40,
                       backgroundImage: AssetImage(members[index].profilePic),
@@ -89,6 +105,11 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Text(
+              "Member",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
             CircleAvatar(
               radius: 60,
               backgroundImage: AssetImage(member.profilePic),
@@ -99,6 +120,15 @@ class ProfileScreen extends StatelessWidget {
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             Text(member.yearSection, style: TextStyle(fontSize: 18)),
+            SizedBox(height: 10),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Text(
+                member.bio,
+                style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ],
         ),
       ),
@@ -110,6 +140,12 @@ class Member {
   final String name;
   final String yearSection;
   final String profilePic;
+  final String bio;
 
-  Member(this.name, this.yearSection, this.profilePic);
+  Member({
+    required this.name,
+    required this.yearSection,
+    required this.profilePic,
+    required this.bio,
+  });
 }
