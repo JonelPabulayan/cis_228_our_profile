@@ -35,9 +35,9 @@ class ProfileScreenState extends State<KellyProfileScreen> {
   final TextEditingController _bioController = TextEditingController();
 
   final Map<String, bool> _interests = {
-    'Movie': false,
+    'Motorcycle Touring': false,
+    'Watching Movies': false,
     'Playing Games': false,
-    'Reading': false,
   };
 
   void _submitForm() {
