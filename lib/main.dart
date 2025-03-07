@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'profile_screens/jonel_profile_screen.dart';
+import 'profile_screens/kelly_profile_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -11,77 +13,75 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: DashboardScreen(),
+      title: 'CIS_228_OUR_PROFILE',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
+        useMaterial3: true,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const DashboardScreen(),
+        '/jonel_profile': (context) => const JonelProfileScreen(),
+        '/kelly_profile': (context) => const KellyProfileScreen(),
+      },
     );
   }
 }
 
 class DashboardScreen extends StatelessWidget {
-  final List<Member> members = [
-    Member(
-      name: "Jonel",
-      yearSection: "3rd Year - A",
-      profilePic: "assets/jonel1.jpg",
-      bio: "I love coding and exploring new technologies.",
-    ),
-    Member(
-      name: "Kelly",
-      yearSection: "3rd Year - A",
-      profilePic: "assets/kelly.jpg",
-      bio: "A passionate designer and front-end developer.",
-    ),
-  ];
+  const DashboardScreen({super.key});
 
-  DashboardScreen({super.key});
+  final List<Map<String, String>> members = const [
+    {
+      'name': 'Jonel Pabulayan',
+      'year': '3rd Year',
+      'section': 'Section A',
+      'image': 'assets/jonel1.jpg',
+      'route': '/jonel_profile',
+    },
+    {
+      'name': 'Kelly John Noca',
+      'year': '3rd Year',
+      'section': 'Section A',
+      'image': 'assets/kelly.jpg',
+      'route': '/kelly_profile',
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Dashboard")),
+      appBar: AppBar(title: const Text("Dashboard")),
       body: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(10.0),
         child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
-            crossAxisSpacing: 8.0,
-            mainAxisSpacing: 8.0,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
           ),
           itemCount: members.length,
           itemBuilder: (context, index) {
+            final member = members[index];
             return GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfileScreen(member: members[index]),
-                  ),
-                );
+                Navigator.pushNamed(context, member['route']!);
               },
               child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
+                elevation: 4,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Member",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 8),
                     CircleAvatar(
                       radius: 40,
-                      backgroundImage: AssetImage(members[index].profilePic),
+                      backgroundImage: NetworkImage(member['image']!),
                     ),
-                    SizedBox(height: 8),
+                    const SizedBox(height: 10),
                     Text(
-                      members[index].name,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      member['name']!,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
-                    Text(members[index].yearSection),
+                    Text('${member['year']} - ${member['section']}'),
                   ],
                 ),
               ),
@@ -91,61 +91,4 @@ class DashboardScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class ProfileScreen extends StatelessWidget {
-  final Member member;
-  const ProfileScreen({super.key, required this.member});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Profile")),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Member",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            CircleAvatar(
-              radius: 60,
-              backgroundImage: AssetImage(member.profilePic),
-            ),
-            SizedBox(height: 10),
-            Text(
-              member.name,
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            Text(member.yearSection, style: TextStyle(fontSize: 18)),
-            SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                member.bio,
-                style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class Member {
-  final String name;
-  final String yearSection;
-  final String profilePic;
-  final String bio;
-
-  Member({
-    required this.name,
-    required this.yearSection,
-    required this.profilePic,
-    required this.bio,
-  });
 }
