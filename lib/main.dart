@@ -74,7 +74,7 @@ class DashboardScreen extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 40,
-                      backgroundImage: NetworkImage(member['image']!),
+                      backgroundImage: AssetImage(member['image']!),
                     ),
                     const SizedBox(height: 10),
                     Text(
