@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -22,39 +20,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class JonelProfileScreen extends StatefulWidget {
+class JonelProfileScreen extends StatelessWidget {
   const JonelProfileScreen({super.key});
-
-  @override
-  ProfileScreenState createState() => ProfileScreenState();
-}
-
-class ProfileScreenState extends State<JonelProfileScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _bioController = TextEditingController();
-
-  final Map<String, bool> _interests = {
-    'Movie': false,
-    'Playing Games': false,
-    'Reading': false,
-  };
-
-  void _submitForm() {
-    String name = _nameController.text;
-    String email = _emailController.text;
-    String bio = _bioController.text;
-    List<String> selectedInterests =
-        _interests.entries
-            .where((entry) => entry.value)
-            .map((entry) => entry.key)
-            .toList();
-
-    log("Name: $name");
-    log("Email: $email");
-    log("Bio: $bio");
-    log("Interests: ${selectedInterests.join(', ')}");
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,71 +29,67 @@ class ProfileScreenState extends State<JonelProfileScreen> {
       appBar: AppBar(title: const Text("Jonel Profile")),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Profile Picture
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/jonel1.jpg'),
-            ),
-            const SizedBox(height: 20),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          elevation: 5,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Profile Picture
+                Center(
+                  child: const CircleAvatar(
+                    radius: 50,
+                    backgroundImage: AssetImage('assets/jonel1.jpg'),
+                  ),
+                ),
+                const SizedBox(height: 20),
 
-            // Name TextField
-            TextField(
-              controller: _nameController,
-              decoration: const InputDecoration(
-                labelText: 'Enter your name',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 10),
+                // Name
+                const Text(
+                  "Name:",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const Text("Jonel Pabulayan", style: TextStyle(fontSize: 16)),
+                const SizedBox(height: 10),
 
-            // Email TextField
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(
-                labelText: 'Enter your email',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(height: 10),
+                // Email
+                const Text(
+                  "Email:",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const Text(
+                  "jonel123@gmail.com",
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 10),
 
-            // Bio TextField
-            TextField(
-              controller: _bioController,
-              decoration: const InputDecoration(
-                labelText: 'A Short Bio About Yourself',
-                border: OutlineInputBorder(),
-              ),
-              maxLines: 2,
-            ),
-            const SizedBox(height: 10),
+                // Bio
+                const Text(
+                  "Bio:",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const Text(
+                  "I like playing games.",
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 10),
 
-            // Interests Checkboxes
-            const Text(
-              "Select your interests:",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                // Interests
+                const Text(
+                  "Interests:",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                const Text(
+                  "- Watching Anime\n- Playing Games\n- Reading Manga",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
             ),
-            Column(
-              children:
-                  _interests.keys.map((String key) {
-                    return CheckboxListTile(
-                      title: Text(key),
-                      value: _interests[key],
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _interests[key] = value ?? false;
-                        });
-                      },
-                    );
-                  }).toList(),
-            ),
-
-            // Submit Button
-            ElevatedButton(onPressed: _submitForm, child: const Text("Submit")),
-          ],
+          ),
         ),
       ),
     );
