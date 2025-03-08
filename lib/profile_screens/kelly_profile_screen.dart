@@ -73,7 +73,7 @@ class KellyProfileScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const Text(
-                  "I like playing games.",
+                  "I like to tour with my motorcycle.",
                   style: TextStyle(fontSize: 16),
                 ),
                 const SizedBox(height: 10),
